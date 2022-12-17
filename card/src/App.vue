@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card">
+    <div class="card container">
       <Toolbar class="mb-4">
         <template #start> </template>
 
@@ -28,9 +28,13 @@
       >
         <template #header>
           <div
-            class="table-header flex flex-column md:flex-row md:justiify-content-between"
+            class="
+              table-header
+              flex flex-column
+              md:flex-row md:justify-content-between
+            "
           >
-            <h5 class="mb-2 md:m-0 p-as-md-center">Manage Products</h5>
+            <h5 class="mb-2 md:m-0 p-as-md-center">Client Detail</h5>
             <span class="p-input-icon-left">
               <i class="pi pi-search" />
               <InputText
@@ -43,79 +47,36 @@
 
         <Column
           selectionMode="multiple"
-          style="width: 3rem"
+          
           :exportable="false"
         ></Column>
         <Column
-          field="code"
-          header="Code"
+          field="full_name"
+          header="Full Name"
           :sortable="true"
-          style="min-width: 12rem"
+          style="min-width: 18rem"
         ></Column>
         <Column
-          field="name"
-          header="Name"
+          field="email"
+          header="Email"
           :sortable="true"
-          style="min-width: 16rem"
+          style="min-width: 18rem"
         ></Column>
-        <Column header="Image">
+        <Column header="Image" style="min-width: 18rem">
           <template #body="slotProps">
-            <img
-              src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
-              :alt="slotProps.data.image"
-              class="product-image"
-            />
+            <img  v-bind:src="slotProps.data.mug" :alt="hello" class="product-image" style="width:4rem; border-radius:50%" />
           </template>
         </Column>
         <Column
-          field="price"
-          header="Price"
+          field="circle"
+          header="Circle"
           :sortable="true"
-          style="min-width: 8rem"
+          style="min-width: 18rem"
         >
-          <template #body="slotProps">
-            {{ formatCurrency(slotProps.data.price) }}
-          </template>
+        
         </Column>
-        <Column
-          field="category"
-          header="Category"
-          :sortable="true"
-          style="min-width: 10rem"
-        ></Column>
-        <Column
-          field="rating"
-          header="Reviews"
-          :sortable="true"
-          style="min-width: 12rem"
-        >
-          <template #body="slotProps">
-            <Rating
-              :modelValue="slotProps.data.rating"
-              :readonly="true"
-              :cancel="false"
-            />
-          </template>
-        </Column>
-        <Column
-          field="inventoryStatus"
-          header="Status"
-          :sortable="true"
-          style="min-width: 12rem"
-        >
-          <template #body="slotProps">
-            <span
-              :class="
-                'product-badge status-' +
-                (slotProps.data.inventoryStatus
-                  ? slotProps.data.inventoryStatus.toLowerCase()
-                  : '')
-              "
-              >{{ slotProps.data.inventoryStatus }}</span
-            >
-          </template>
-        </Column>
-        <Column :exportable="false" style="min-width: 8rem">
+        
+        <Column :exportable="false" header="Action" >
           <template #body="slotProps">
             <Button
               icon="pi pi-eye"
@@ -135,120 +96,25 @@
       class="p-fluid"
     >
       <img
-        src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
-        :alt="product.image"
+        v-bind:src="product.mug"
+        :alt="product.mug"
         class="product-image"
-        v-if="product.image"
+        v-if="product.mug"
+        :style="{ width: '100px', borderRadius: '50%' }"
       />
-      <div class="field">
-        <label for="name">Name</label>
-        <InputText
-          id="name"
-          v-model.trim="product.name"
-          required="true"
-          autofocus
-          :class="{ 'p-invalid': submitted && !product.name }"
-        />
-        <small class="p-error" v-if="submitted && !product.name"
-          >Name is required.</small
-        >
-      </div>
-      <div class="field">
-        <label for="description">Description</label>
-        <Textarea
-          id="description"
-          v-model="product.description"
-          required="true"
-          rows="3"
-          cols="20"
-        />
-      </div>
-
-      <div class="field">
-        <label for="inventoryStatus" class="mb-3">Inventory Status</label>
-        <Dropdown
-          id="inventoryStatus"
-          v-model="product.inventoryStatus"
-          :options="statuses"
-          optionLabel="label"
-          placeholder="Select a Status"
-        >
-          <template #value="slotProps">
-            <div v-if="slotProps.value && slotProps.value.value">
-              <span :class="'product-badge status-' + slotProps.value.value">{{
-                slotProps.value.label
-              }}</span>
-            </div>
-            <div v-else-if="slotProps.value && !slotProps.value.value">
-              <span
-                :class="'product-badge status-' + slotProps.value.toLowerCase()"
-                >{{ slotProps.value }}</span
-              >
-            </div>
-            <span v-else>
-              {{ slotProps.placeholder }}
-            </span>
-          </template>
-        </Dropdown>
-      </div>
-
-      <div class="field">
-        <label class="mb-3">Category</label>
-        <div class="formgrid grid">
-          <div class="field-radiobutton col-6">
-            <RadioButton
-              id="category1"
-              name="category"
-              value="Accessories"
-              v-model="product.category"
-            />
-            <label for="category1">Accessories</label>
-          </div>
-          <div class="field-radiobutton col-6">
-            <RadioButton
-              id="category2"
-              name="category"
-              value="Clothing"
-              v-model="product.category"
-            />
-            <label for="category2">Clothing</label>
-          </div>
-          <div class="field-radiobutton col-6">
-            <RadioButton
-              id="category3"
-              name="category"
-              value="Electronics"
-              v-model="product.category"
-            />
-            <label for="category3">Electronics</label>
-          </div>
-          <div class="field-radiobutton col-6">
-            <RadioButton
-              id="category4"
-              name="category"
-              value="Fitness"
-              v-model="product.category"
-            />
-            <label for="category4">Fitness</label>
-          </div>
+      <h5 class="text-center">{{ product.full_name }}</h5>
+      <div class="row" style="display:flex">
+        <div class="col-md-4 col-4" style="font-size:2rem;text-align:center">
+         <font-awesome-icon icon="fa-solid fa-envelope" />
         </div>
-      </div>
-
-      <div class="formgrid grid">
-        <div class="field col">
-          <label for="price">Price</label>
-          <InputNumber
-            id="price"
-            v-model="product.price"
-            mode="currency"
-            currency="USD"
-            locale="en-US"
-          />
+        <div class="col-md-4 col-4" style="font-size:2rem;text-align:center">
+          <font-awesome-icon icon="fa-solid fa-phone" />
         </div>
-        <div class="field col">
-          <label for="quantity">Quantity</label>
-          <InputNumber id="quantity" v-model="product.quantity" integeronly />
+        <div class="col-md-4 col-4" style="font-size:2rem;text-align:center">
+         <font-awesome-icon icon="fa-solid fa-link" />
         </div>
+        
+        
       </div>
       <template #footer>
         <Button
@@ -258,8 +124,8 @@
           @click="hideDialog"
         />
         <Button
-          label="Export"
-          icon="pi pi-upload"
+          label="Save Contact"
+          icon="pi pi-download"
           class="p-button-help"
           @click="exportCSV($event)"
         />
@@ -341,11 +207,6 @@ export default {
       selectedProducts: null,
       filters: {},
       submitted: false,
-      statuses: [
-        { label: "INSTOCK", value: "instock" },
-        { label: "LOWSTOCK", value: "lowstock" },
-        { label: "OUTOFSTOCK", value: "outofstock" },
-      ],
     };
   },
   productService: null,
@@ -354,7 +215,9 @@ export default {
     this.initFilters();
   },
   mounted() {
-    this.productService.getProducts().then((data) => (this.products = data));
+    this.productService.getProducts().then((data) => {
+      this.products = data;
+    });
   },
   methods: {
     formatCurrency(value) {
@@ -378,18 +241,18 @@ export default {
       axios({
         method: "get",
         url: "https://api.canzell.com/__public__/user-service/users",
-        
       }).then((data) => {
-        let result = data.data
+        let result = data.data;
         let formData = new FormData();
-        formData.append('data',JSON.stringify(result))
-        
-         axios.post('http://127.0.0.1:8000/api/clients/import-data',formData)
-          .then(response => {
-            console.log(response)
+        formData.append("data", JSON.stringify(result));
+
+        axios
+          .post("http://127.0.0.1:8000/api/clients/import-data/", formData)
+          .then((response) => {
+            console.log(response);
           })
-          .catch(error =>{
-            console.log(error)
+          .catch((error) => {
+            console.log(error);
           });
       });
     },

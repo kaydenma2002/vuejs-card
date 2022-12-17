@@ -7,7 +7,16 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "./index.css";
 
+import { library } from '@fortawesome/fontawesome-svg-core'
 
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+/* import specific icons */
+import { faUserSecret,faEnvelope,faPhone,faLink } from '@fortawesome/free-solid-svg-icons'
+
+/* add icons to the library */
+library.add(faUserSecret,faEnvelope,faPhone,faLink)
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
 import Accordion from 'primevue/accordion';
@@ -123,6 +132,8 @@ app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
 app.component('Accordion', Accordion);
+app.component('font-awesome-icon', FontAwesomeIcon);
+
 app.component('AccordionTab', AccordionTab);
 app.component('AutoComplete', AutoComplete);
 app.component('Avatar', Avatar);
