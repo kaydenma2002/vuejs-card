@@ -46,9 +46,10 @@
         </template>
 
         <Column
-          selectionMode="multiple"
+          field="id"
+          header="#"
+          :sortable="true"
           
-          :exportable="false"
         ></Column>
         <Column
           field="full_name"
@@ -127,7 +128,7 @@
           label="Save Contact"
           icon="pi pi-download"
           class="p-button-help"
-          @click="exportCSV($event)"
+          @click.once="exportClient()"
         />
       </template>
     </Dialog>
@@ -236,6 +237,10 @@ export default {
     hideDialog() {
       this.productDialog = false;
       this.submitted = false;
+    },
+    exportClient(){
+      window.open(
+            `http://127.0.0.1:8000/api/clients/export-data/${this.product.id}`, "_blank");
     },
     importClient() {
       axios({
