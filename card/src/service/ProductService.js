@@ -2,7 +2,7 @@ import axios from "axios";
 export default class ProductService {
 
     getProductsSmall() {
-		return fetch('demo/data/products-small.json').then(res => res.json()).then(d => console.log(d.data));
+		return fetch('demo/data/clients.json').then(res => res.json()).then(d => console.log(d.data));
 	}
 
 	getProducts() {
