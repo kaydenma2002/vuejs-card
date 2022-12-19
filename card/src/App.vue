@@ -49,35 +49,31 @@
           field="id"
           header="#"
           :sortable="true"
-          
+          style="min-width:8rem"
         ></Column>
         <Column
           field="full_name"
           header="Full Name"
           :sortable="true"
-          style="min-width: 18rem"
+          style="min-width: 20rem"
         ></Column>
         <Column
           field="email"
           header="Email"
           :sortable="true"
-          style="min-width: 18rem"
+          style="min-width: 20rem"
         ></Column>
-        <Column header="Image" style="min-width: 18rem">
-          <template #body="slotProps">
-            <img  v-bind:src="slotProps.data.mug" :alt="hello" class="product-image" style="width:4rem; border-radius:50%" />
-          </template>
-        </Column>
+        
         <Column
           field="circle"
           header="Circle"
           :sortable="true"
-          style="min-width: 18rem"
+          style="min-width: 20rem"
         >
         
         </Column>
         
-        <Column :exportable="false" header="Action" >
+        <Column :exportable="false" header="Action" style="min-width: 14rem" >
           <template #body="slotProps">
             <Button
               icon="pi pi-eye"
